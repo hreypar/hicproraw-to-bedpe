@@ -1,9 +1,47 @@
-###################################################################
-# hreyes Jan 2020
+#!/usr/bin/env Rscript
 #
+# hreyes Jan 2020
 # generate-hicexp.R
 #
-# Read in a raw matrix (output from HiC-Pro) and format it to
-# generate a hicexp object
-###################################################################
+# Read in a raw matrix (output from HiC-Pro) and format it to generate a hicexp object
+#
+#
+#################### import libraries and set options ####################
+library(magrittr)
+library(purrr)
+library(dplyr)
+library(HiCcompare)
+#
+options(scipen = 10)
+#
+########################## read in data ###################################
+args = commandArgs(trailingOnly=TRUE)
+#
+#
+args[grepl(".matrix", args)]  %>% 
+  read.table() -> hicpro_matrix
+#
+args[grepl("_abs.bed", args)] %>% 
+  read.table() -> hicpro_bed 
+#
+out_bedpe = args[grepl("bedpe", args)]
+#
+#
+#################### build variable name for bedpe object ##################
+basename(out_bedpe) %>%
+  gsub(pattern = ".Rdata", replacement = "") -> outfile
+#
+#  
+###################### then you call hicpro2bedpe ##########################
+assign(outfile, hicpro2bedpe(mat = hicpro_matrix, bed = hicpro_bed))
+#
+#
+########### select only cis interactions and bind the chromosomes ##########
+get(outfile) %>%
+  pluck("cis") %>%
+  within(rm("chrY")) %>%
+  bind_rows()
+
+# then you save the object and that's that
+save(eval(as.symbol(outfile)), file = out_bedpe)
 
