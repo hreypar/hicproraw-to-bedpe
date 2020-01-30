@@ -16,5 +16,6 @@ results/%.bedpe.Rdata:	data/%.matrix data/%_abs.bed
 	mkdir -p `dirname $target`
 	bin/generate-hicexp.R \
 		--vanilla \
-		$prereq
+		$prereq \
+		$target
 
