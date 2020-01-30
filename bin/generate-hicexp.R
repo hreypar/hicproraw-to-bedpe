@@ -24,17 +24,18 @@ args[grepl(".matrix", args)]  %>%
 args[grepl("_abs.bed", args)] %>% 
   read.table() -> hicpro_bed 
 #
-out_bedpe = args[grepl("bedpe", args)]
+out_bedpe_path = args[grepl("bedpe", args)]
 #
 #
 #################### build variable name for bedpe object ##################
-basename(out_bedpe) %>%
+basename(out_bedpe_path) %>%
   gsub(pattern = ".Rdata", replacement = "") -> outfile
 #
 #  
 ###################### then you call hicpro2bedpe ##########################
 assign(outfile, hicpro2bedpe(mat = hicpro_matrix, bed = hicpro_bed))
 #
+#rm(hicpro_matrix, hicpro_bed)
 #
 ########### select only cis interactions and bind the chromosomes ##########
 get(outfile) %>%
@@ -42,6 +43,5 @@ get(outfile) %>%
   within(rm("chrY")) %>%
   bind_rows()
 
-# then you save the object and that's that
-save(eval(as.symbol(outfile)), file = out_bedpe)
-
+    # then you save the object and that's that
+save(eval(as.symbol(outfile)), file = out_bedpe_path)
