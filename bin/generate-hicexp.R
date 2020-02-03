@@ -29,19 +29,35 @@ out_bedpe_path = args[grepl("bedpe", args)]
 #
 #################### build variable name for bedpe object ##################
 basename(out_bedpe_path) %>%
-  gsub(pattern = ".Rdata", replacement = "") -> outfile
+  gsub(pattern = ".Rdata", replacement = "") %>%
+  gsub(pattern = "-", replacement = "_") -> outfile
 #
 #  
 ###################### then you call hicpro2bedpe ##########################
-assign(outfile, hicpro2bedpe(mat = hicpro_matrix, bed = hicpro_bed))
+#assign(outfile, hicpro2bedpe(mat = hicpro_matrix, bed = hicpro_bed))
 #
+b <- hicpro2bedpe(mat = hicpro_matrix, bed = hicpro_bed)
 #rm(hicpro_matrix, hicpro_bed)
 #
 ########### select only cis interactions and bind the chromosomes ##########
-get(outfile) %>%
+b %<>%
   pluck("cis") %>%
   within(rm("chrY")) %>%
   bind_rows()
 
-    # then you save the object and that's that
-save(eval(as.symbol(outfile)), file = out_bedpe_path)
+# then you save the object with a unique name within R and that's that
+assign(outfile, b)
+
+save(list = outfile, file = out_bedpe_path)
+  
+
+
+
+
+
+
+
+
+
+
+
