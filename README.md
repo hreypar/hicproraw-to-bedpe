@@ -23,6 +23,6 @@ The [`hicpro2bedpe`](https://rdrr.io/bioc/HiCcompare/man/hicpro2bedpe.html) func
 
 ## Author ##
 
-[Helena Reyes Gopar](hreyes@inmegen.edu.mx)
+[Helena Reyes Gopar](mailto:hreyes@inmegen.edu.mx)
 
  
