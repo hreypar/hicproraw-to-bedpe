@@ -6,6 +6,7 @@
 find -L data/ \
 	-type f \
 	-name "*.matrix" \
+	-not -name "*iced*" \
 | sed -r \
 	-e 's#^data/#results/#' \
 	-e 's#.matrix$#.bedpe.Rdata#' \
