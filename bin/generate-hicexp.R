@@ -49,4 +49,5 @@ get(outfile) %>%
   assign(outfile, ., envir = env)
 
 # then you save the object with a unique name within R and that's that
+# THIS SAVE REALLY NEEDS TO CHANGE TO saveRDS
 save(list = outfile, file = out_bedpe_path)
