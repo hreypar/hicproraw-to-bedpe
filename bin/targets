@@ -9,6 +9,6 @@ find -L data/ \
 	-not -name "*iced*" \
 | sed -r \
 	-e 's#^data/#results/#' \
-	-e 's#.matrix$#.bedpe.Rdata#' \
+	-e 's#.matrix$#.bedpe.Rds#' \
 | sort
 
