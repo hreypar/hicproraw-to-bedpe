@@ -12,9 +12,9 @@
 #
 # Run R script to produce matrices in bedpe format.
 #
-results/%.bedpe.Rdata:	data/%.matrix data/%_abs.bed
+results/%.bedpe.Rds:	data/%.matrix data/%_abs.bed
 	mkdir -p `dirname $target`
-	bin/generate-hicexp.R \
+	bin/generate-bedpe.R \
 		--vanilla \
 		$prereq \
 		$target
