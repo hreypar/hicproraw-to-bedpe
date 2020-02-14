@@ -1,7 +1,7 @@
 #!/usr/bin/env Rscript
 #
 # hreyes Jan 2020
-# generate-hicexp.R
+# generate-bedpe.R
 #
 # Read in a raw matrix (output from HiC-Pro) and format it to generate a bedpe object
 #
@@ -28,26 +28,33 @@ out_bedpe_path = args[grepl("bedpe", args)]
 #
 #
 #################### build variable name for bedpe object ##################
-basename(out_bedpe_path) %>%
-  gsub(pattern = ".Rdata", replacement = "") %>%
-  gsub(pattern = "-", replacement = "_") -> outfile
+# basename(out_bedpe_path) %>%
+#   gsub(pattern = ".Rds", replacement = "") %>%
+#   gsub(pattern = "-", replacement = "_") -> outfile
 #
 #  
 ###################### then you call hicpro2bedpe ##########################
-assign(outfile, hicpro2bedpe(mat = hicpro_matrix, bed = hicpro_bed))
+#assign(outfile, hicpro2bedpe(mat = hicpro_matrix, bed = hicpro_bed))
 #
+outfile <- hicpro2bedpe(mat = hicpro_matrix, bed = hicpro_bed)
 #rm(hicpro_matrix, hicpro_bed)
 #
 ########### select only cis interactions and bind the chromosomes ##########
-env <- environment()
+# env <- environment()
+# 
+# get(outfile) %>%
+#   pluck("cis") %>%
+#   within(rm("chrY")) %>%
+#   bind_rows() %>%
+#   droplevels() %>%
+#   assign(outfile, ., envir = env)
 
-get(outfile) %>%
+outfile %<>%
   pluck("cis") %>%
   within(rm("chrY")) %>%
   bind_rows() %>%
-  droplevels() %>%
-  assign(outfile, ., envir = env)
+  droplevels()
 
-# then you save the object with a unique name within R and that's that
-# THIS SAVE REALLY NEEDS TO CHANGE TO saveRDS
-saveRDS(list = outfile, file = out_bedpe_path)
+# then you save the object and that's that
+#save(list = outfile, file = out_bedpe_path)
+saveRDS(outfile, file = out_bedpe_path)
