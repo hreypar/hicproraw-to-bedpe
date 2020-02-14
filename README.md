@@ -18,7 +18,7 @@ The [`hicpro2bedpe`](https://rdrr.io/bioc/HiCcompare/man/hicpro2bedpe.html) func
 
 ## Acknowledgements ##
 
-- This [SO post](https://stackoverflow.com/questions/4675755/how-to-save-with-a-particular-variable-name?rq=1) exemplifying how to save an object when its name is in a string variable.
+- This [SO post](https://stackoverflow.com/questions/4675755/how-to-save-with-a-particular-variable-name?rq=1) exemplifying how to save an object when its name is in a string variable was originally used, however [saveRDS()](https://www.r-bloggers.com/how-to-save-and-load-datasets-in-r-an-overview/) was later favoured.
 
 
 ## Author ##
