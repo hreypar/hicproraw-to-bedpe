@@ -1,6 +1,6 @@
 # hicproraw-to-bedpe #
 
-Import a [HiC-Pro](http://nservant.github.io/HiC-Pro/) raw `.matrix` and `.bed` of any resolution into R and generate a `.bedpe.Rdata` object.
+Import a [HiC-Pro](http://nservant.github.io/HiC-Pro/) raw `.matrix` and `.bed` of any resolution into R and generate a `.bedpe.Rds` object.
 
 
 ## Description ##
