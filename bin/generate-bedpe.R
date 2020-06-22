@@ -10,7 +10,7 @@
 library(magrittr)
 library(purrr)
 library(dplyr)
-library(HiCcompare)
+suppressMessages(library(HiCcompare))
 #
 options(scipen = 10)
 #
