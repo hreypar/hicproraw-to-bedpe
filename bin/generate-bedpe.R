@@ -7,10 +7,11 @@
 #
 #
 #################### import libraries and set options ####################
-library(magrittr)
-library(purrr)
-library(dplyr)
+suppressMessages(library(magrittr))
+suppressMessages(library(purrr))
+suppressMessages(library(dplyr))
 suppressMessages(library(HiCcompare))
+message("\nRequired libraries have been loaded.")
 #
 options(scipen = 10)
 #
@@ -20,14 +21,17 @@ args = commandArgs(trailingOnly=TRUE)
 #
 args[grepl(".matrix", args)]  %>% 
   read.table() -> hicpro_matrix
+message("The matrix file has been read.")
 #
 args[grepl("_abs.bed", args)] %>% 
-  read.table() -> hicpro_bed 
+  read.table() -> hicpro_bed
+message("The corresponding bed file has been read.") 
 #
 out_bedpe_path = args[grepl("bedpe", args)]
 #
 ########################## call hicpro2bedpe ##############################
 outfile <- hicpro2bedpe(mat = hicpro_matrix, bed = hicpro_bed)
+message("The bedpe object has been generated.")
 #
 #rm(hicpro_matrix, hicpro_bed)
 #
@@ -37,6 +41,9 @@ outfile %<>%
   within(rm("chrY")) %>%
   bind_rows() %>%
   droplevels()
+message("CIS Hi-C interactions have been selected.")
 #
 ################  then you save the object and that's that ################
 saveRDS(outfile, file = out_bedpe_path)
+message("The bedpe object has been saved as an .Rds file.\n")
+
